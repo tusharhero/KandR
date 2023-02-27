@@ -6,23 +6,25 @@
 
 #include "get_line.h"
 
-#define COLUMNSIZE 24
+#define COLUMNSIZE 8
 
 void fold(char line[MAXSIZE], char folded[MAXSIZE], int len){
-  int i;
-  int current_col = COLUMNSIZE;
-  for(i = 0; i < len; ++i){
-    if(i == current_col){
+  int extrapartialcolumn = len%COLUMNSIZE;
+  int currentcolumn = len- extrapartialcolumn;
+  int isitfolded  =  0;
+  for(int i = len; i >= 0; i--){
+    if (line[i] == ' ' && isitfolded == 0) {
       folded[i] = '\n';
-    }
-    if(i%COLUMNSIZE == 0 && i != 0){
-      current_col += COLUMNSIZE;
+      isitfolded = 1;
     }
     else{
       folded[i] = line[i];
     }
+    if ((len - extrapartialcolumn)%i == 0) {
+      currentcolumn -= COLUMNSIZE;
+      isitfolded = 0;
+    }
   }
-  folded[i] = 0;
 }
 
 int main(){
