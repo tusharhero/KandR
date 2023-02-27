@@ -12,7 +12,9 @@ void fold(char line[MAXSIZE], char folded[MAXSIZE], int len){
   int extrapartialcolumn = len%COLUMNSIZE;
   int currentcolumn = len- extrapartialcolumn;
   int isitfolded  =  0;
-  for(int i = len; i >= 0; i--){
+
+  folded[0] = line[0];
+  for(int i = len; i > 0; i--){
     if (line[i] == ' ' && isitfolded == 0) {
       folded[i] = '\n';
       isitfolded = 1;
@@ -20,7 +22,7 @@ void fold(char line[MAXSIZE], char folded[MAXSIZE], int len){
     else{
       folded[i] = line[i];
     }
-    if ((len - extrapartialcolumn)%i == 0) {
+    if ( i%(len - extrapartialcolumn) == 0) {
       currentcolumn -= COLUMNSIZE;
       isitfolded = 0;
     }
